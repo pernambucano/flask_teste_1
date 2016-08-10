@@ -22,6 +22,7 @@ def login_required(f):
 @login_required
 def home():
     # return "Hello, world!"
+    posts = []
     try:
         # TODO : g ?
         g.db = connect_database()
@@ -33,7 +34,7 @@ def home():
         posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
         g.db.close()
     except sqlite3.OperationalError:
-        flash("\nNo database!")
+        flash("You have no database.")
     return render_template('index.html', posts=posts)
 
 
