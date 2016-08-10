@@ -22,16 +22,18 @@ def login_required(f):
 @login_required
 def home():
     # return "Hello, world!"
+    try:
+        # TODO : g ?
+        g.db = connect_database()
 
-    # TODO : g ?
-    g.db = connect_database()
+        # TODO : cursor?
+        cur = g.db.execute('select * from posts')
 
-    # TODO : cursor?
-    cur = g.db.execute('select * from posts')
-
-    # TODO : need to understand dict and fetchall
-    posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-    g.db.close()
+        # TODO : need to understand dict and fetchall
+        posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
+        g.db.close()
+    except sqlite3.OperationalError:
+        flash("\nNo database!")
     return render_template('index.html', posts=posts)
 
 
