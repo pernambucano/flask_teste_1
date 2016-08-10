@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Index {% endblock%}
+{%block content %}
+<div class="container">
+    <h1>Welcome to Flask!</h1>
+    <br>
+    <p>
+        Click <a href="/logout">here</a> to logout
+    </p>
+
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+
+    {% for post in posts %}
+        <strong>Title: </strong> {{post.title}} <br>
+        <strong>Post:</strong> {{post.description}} <br>
+    {% endfor%}
+
+
+</div>
+
+{% endblock %}
